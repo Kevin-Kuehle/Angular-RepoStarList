@@ -25,3 +25,26 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+---
+
+# Task
+
+![alt](./src/assets/img/task.png)
+
+## API Request URL
+
+- **limited:** `https://api.github.com/repositories?sort=stars&per_page=100`
+- **limited and sorted:** `https://api.github.com/search/repositories?q=stars:>1&sort=stars&order=desc`
+
+## Structure
+
+- home-view
+  - list
+    - list
+  - list-detail
+
+## Problems
+
+- GitHub Requests are limited. Requests was blocked. Not really nice for a task.
+  - My next Steps to save time was to create mock-data
