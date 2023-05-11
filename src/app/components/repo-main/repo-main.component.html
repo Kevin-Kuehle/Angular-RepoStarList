@@ -1,0 +1,12 @@
+<div class="c-repo-main">
+  <div class="c-repo-main__list">
+    <app-repo-list
+      [repoData]="repoData"
+      [isMobile]="isMobile"
+      (onItemClick)="clickHandler($event)"
+    ></app-repo-list>
+  </div>
+  <div *ngIf="!isMobile" class="c-repo-main__details">
+    <app-repo-detail [repoItem]="selectedRepo"></app-repo-detail>
+  </div>
+</div>

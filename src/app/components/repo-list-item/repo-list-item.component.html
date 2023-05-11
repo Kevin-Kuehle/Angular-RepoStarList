@@ -1,1 +1,5 @@
-<p>repo-list-item works!</p>
+<div class="c-repo-list-item" (click)="onItemClick.emit(repoItem)">
+  <div class="c-repo-list-item__title">{{ repoItem.title }}</div>
+  <!-- normally i would use a svg but to save time i just added it here -->
+  <div class="c-repo-list-item__stars">(⭐{{ repoItem.stars }})</div>
+</div>

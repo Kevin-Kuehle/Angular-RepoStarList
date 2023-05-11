@@ -1,4 +1,8 @@
 <div class="c-repo-list">
-  <div class="c-repo-list__title">GitHub Repo Browser</div>
-  <div class="c-repo-list__list-item-wrapper"></div>
+  <app-repo-list-item
+    *ngFor="let item of sortedRepoData"
+    [repoItem]="item"
+    [isMobile]="isMobile"
+    (onItemClick)="onItemClick.emit($event)"
+  ></app-repo-list-item>
 </div>

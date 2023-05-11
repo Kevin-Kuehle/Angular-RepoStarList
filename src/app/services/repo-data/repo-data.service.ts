@@ -7,36 +7,31 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class RepoDataService {
-  private apiUrl = 'https://api.github.com/repositories?sort=stars&per_page=3';
-  private devToken = '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';
+  private starsRange = 'stars:>=5000';
+
+  private apiUrl = `https://api.github.com/search/repositories?q=${this.starsRange}&sort=stars&order=desc`;
+  private mockDataUrl = 'assets/mocks/mockData.json';
 
   constructor(private http: HttpClient) {}
 
   getReponsitories(): Observable<any> {
-    // needed because limit of requests per hour
-    const headers = new HttpHeaders().set('Authorization', this.devToken);
-
     return this.http.get<any>(this.apiUrl).pipe(
-      map((repos) => {
-        return repos.map((repo: any) => {
-          console.log(`devlog: repo`, repo);
-          this.getStarredRepos(repo.stargazers_url).subscribe((data) => {
-            console.log(`devlog: data 🤩🤩`, data);
-          });
+      map((response) => {
+        return response.items.map((repo: any) => {
           return {
             id: repo.id,
-            name: repo.name,
-            description: repo.description,
-            url: repo.html_url,
+            title: repo.name,
             stars: repo.stargazers_count,
-            forks: repo.forks_count,
-            language: repo.language,
-            owner: {
-              id: repo.owner.id,
-              login: repo.owner.login,
-              avatar_url: repo.owner.avatar_url,
-              url: repo.owner.url,
-            },
+            owner: repo.owner.login,
+            description: repo.description,
+            readmeFile: this.http
+              .get(repo.url + '/readme', {
+                responseType: 'text',
+              })
+              .subscribe((data) => {
+                console.log(`devlog: data`, JSON.parse(data).download_url);
+                return JSON.parse(data)?.download_url;
+              }),
           };
         });
       })
@@ -45,5 +40,15 @@ export class RepoDataService {
 
   getStarredRepos(stargazers_url: string): Observable<any> {
     return this.http.get<any>(stargazers_url);
+  }
+
+  getMockData(): Observable<any> {
+    return this.http.get<any>(this.mockDataUrl);
+  }
+
+  getItemById(id: number): any {
+    return this.getReponsitories().pipe(
+      map((data) => data.find((item: any) => item.id === id))
+    );
   }
 }

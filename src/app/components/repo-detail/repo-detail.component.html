@@ -1,1 +1,11 @@
-<p>repo-detail works!</p>
+<div class="c-repo-detail">
+  <div class="c-repo-detail__title">{{ repoItem?.title }}</div>
+  <div class="c-repo-detail__stars">⭐ {{ repoItem?.stars }}</div>
+  <div class="c-repo-detail__owner">👤 {{ repoItem?.owner }}</div>
+  <div class="c-repo-detail__description">{{ repoItem?.description }}</div>
+  <div
+    class="c-repo-detail__readme"
+    [innerHTML]="repoItem?.readmeFile | markdown"
+  ></div>
+  <button class="button" [routerLink]="['/']">Back</button>
+</div>

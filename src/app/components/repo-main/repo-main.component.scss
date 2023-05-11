@@ -1,0 +1,13 @@
+.c-repo-main {
+  display: flex;
+  flex-flow: row;
+  align-items: stretch;
+  border: 1px solid #ccc;
+
+  &__list {
+    flex: 3;
+  }
+  &__details {
+    flex: 5;
+  }
+}

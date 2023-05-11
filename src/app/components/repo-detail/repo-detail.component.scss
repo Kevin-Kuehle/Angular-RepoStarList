@@ -1,0 +1,21 @@
+.c-repo-detail {
+  padding: 2rem;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.3rem;
+  font-size: 16px;
+
+  &__title {
+    font-size: 3em;
+  }
+  &__stars {
+  }
+  &__owner {
+    font-weight: bold;
+  }
+  &__description {
+  }
+  &__readme {
+    padding: 2rem 0;
+  }
+}
