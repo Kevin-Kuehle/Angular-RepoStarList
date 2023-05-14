@@ -1,4 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -8,7 +9,7 @@ export default class MobileHandlerService {
   public isMobile$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private resizeEvent: any;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   initMobileHandler(): void {
     this.resizeEvent = addEventListener('resize', () => {
@@ -22,6 +23,7 @@ export default class MobileHandlerService {
       this.isMobile$.next(true);
     } else {
       this.isMobile$.next(false);
+      this.router.navigate(['/']);
     }
   }
 }
