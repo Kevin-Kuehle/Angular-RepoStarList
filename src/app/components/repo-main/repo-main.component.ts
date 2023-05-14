@@ -17,13 +17,14 @@ export class RepoMainComponent implements OnInit {
 
   ngOnInit(): void {
     this.mobileHandler();
+
     this.resizeEvent = addEventListener('resize', () => {
       this.mobileHandler();
     });
 
-    this.repoService.getReponsitories().subscribe((data) => {
-      this.selectedRepo = data[0];
+    this.repoService.repositories$.subscribe((data: any) => {
       this.repoData = data;
+      this.selectedRepo = data[0];
     });
 
     // TODO: delete after developing

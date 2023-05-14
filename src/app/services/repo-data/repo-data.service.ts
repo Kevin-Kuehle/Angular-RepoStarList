@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -14,6 +14,8 @@ export class RepoDataService {
 
   constructor(private http: HttpClient) {}
 
+  public repositories$: BehaviorSubject<any> = new BehaviorSubject([]);
+
   getReponsitories(): Observable<any> {
     return this.http.get<any>(this.apiUrl).pipe(
       map((response) => {
@@ -24,22 +26,17 @@ export class RepoDataService {
             stars: repo.stargazers_count,
             owner: repo.owner.login,
             description: repo.description,
-            readmeFile: this.http
-              .get(repo.url + '/readme', {
-                responseType: 'text',
-              })
-              .subscribe((data) => {
-                console.log(`devlog: data`, JSON.parse(data).download_url);
-                return JSON.parse(data)?.download_url;
-              }),
+            readmeFile: 'test',
           };
         });
       })
     );
   }
 
-  getStarredRepos(stargazers_url: string): Observable<any> {
-    return this.http.get<any>(stargazers_url);
+  initRepositories(): void {
+    this.getReponsitories().subscribe((data) => {
+      this.repositories$.next(data);
+    });
   }
 
   getMockData(): Observable<any> {
@@ -47,8 +44,8 @@ export class RepoDataService {
   }
 
   getItemById(id: number): any {
-    return this.getReponsitories().pipe(
-      map((data) => data.find((item: any) => item.id === id))
-    );
+    return this.repositories$.getValue().find((item: any) => {
+      return item.id === id;
+    });
   }
 }

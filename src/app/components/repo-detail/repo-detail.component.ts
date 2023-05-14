@@ -23,13 +23,7 @@ export class RepoDetailComponent implements OnInit {
       let id = parseInt(params.get('id') || '');
 
       if (id) {
-        this.repoDataService.getItemById(id).subscribe((data: any) => {
-          if (data) {
-            this.repoItem = data;
-          } else {
-            console.error("devlog: Can't find item with id: ", id);
-          }
-        });
+        this.repoItem = this.repoDataService.getItemById(id);
       }
     });
   }
