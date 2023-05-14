@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { RepoDataService } from '@service/repo-data/repo-data.service';
+import { mobileHandler } from '@service/index';
 
 @Component({
   selector: 'app-repo-main',
@@ -13,13 +14,15 @@ export class RepoMainComponent implements OnInit {
   resizeEvent: any;
   selectedRepo: any | null = null;
 
-  constructor(private repoService: RepoDataService, private router: Router) {}
+  constructor(
+    private repoService: RepoDataService,
+    private router: Router,
+    private mobileS: mobileHandler
+  ) {}
 
   ngOnInit(): void {
-    this.mobileHandler();
-
-    this.resizeEvent = addEventListener('resize', () => {
-      this.mobileHandler();
+    this.mobileS.isMobile$.subscribe((data) => {
+      this.isMobile = data;
     });
 
     this.repoService.repositories$.subscribe((data: any) => {
@@ -32,20 +35,6 @@ export class RepoMainComponent implements OnInit {
     //   this.selectedRepo = data[0];
     //   this.repoData = data;
     // });
-  }
-
-  ngOnDestroy(): void {
-    removeEventListener('resize', this.resizeEvent);
-  }
-
-  mobileHandler() {
-    let width = window.innerWidth;
-    if (width < 768) {
-      this.isMobile = true;
-    } else {
-      this.isMobile = false;
-      this.router.navigate(['/']);
-    }
   }
 
   clickHandler(item: any) {
