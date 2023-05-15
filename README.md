@@ -33,18 +33,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ![alt](./src/assets/img/task.png)
 
 ## API Request URL
+**sorted:** "https://api.github.com/search/repositories?q=stars:>=5000&sort=stars&order=desc"
 
-- **limited:** `https://api.github.com/repositories?sort=stars&per_page=100`
-- **limited and sorted:** `https://api.github.com/search/repositories?q=stars:>1&sort=stars&order=desc`
 
-## Structure
-
-- home-view
-  - list
-    - list
-  - list-detail
-
-## Problems
-
-- GitHub Requests are limited. Requests was blocked. Not really nice for a task.
-  - My next Steps to save time was to create mock-data
